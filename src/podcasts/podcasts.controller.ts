@@ -44,6 +44,7 @@ export class PodcastsController {
     }
 
     @Patch(":id/episodes/:episodeId")
+    
     patchEpisodes(@Param("id") podcastId: string, @Param("episodeId") episodeId: string, @Body() updateEpisode) {
         return this.podcastsService.patchEpisodes(podcastId, episodeId, updateEpisode);
     }

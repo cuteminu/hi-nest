@@ -27,7 +27,7 @@ export class PodcastsService {
 
     deleteOne(id) {
         this.getOne(id); // Checking Errors
-        this.podcasts = this.podcasts.filter(podcast => podcast.id !== parseInt(id));
+        this.podcasts = this.podcasts.filter(podcast => podcast.id != parseInt(id));
         return true;
     }
 
@@ -51,13 +51,15 @@ export class PodcastsService {
     }
 
     deleteAnEpisode(id, epId){
-        this.podcasts[id].episodes = this.podcasts[id].episodes.filter(episode => episode.id !== epId);
+        const podcast = this.getOne(id);
+        podcast.episodes = podcast.episodes.filter(episode => episode.id !== +epId);
         return true;
     }
 
     patchEpisodes(id, epId, updateEpisode) {
-        const episode = this.getEpisodes(id)[epId]
-        this.deleteAnEpisode(id, epId);
-        this.podcasts[id].episodes.push({...episode,...updateEpisode});
+        const podcast = this.getOne(id);
+        const episode = podcast.episodes[parseInt(epId)-1];
+        this.deleteAnEpisode(id, parseInt(epId));
+        podcast.episodes.push({...episode,...updateEpisode});
     }
 }
